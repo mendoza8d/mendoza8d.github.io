@@ -139,7 +139,7 @@
   });
 
   // Porfolio isotope and filter
-  $(window).on('load', function() {
+  /*$(window).on('load', function() {
     var portfolioIsotope = $('.portfolio-container').isotope({
       itemSelector: '.portfolio-item',
       layoutMode: 'fitRows'
@@ -154,11 +154,40 @@
       });
     });
 
+
     // Initiate venobox (lightbox feature used in portofilo)
     $(document).ready(function() {
       $('.venobox').venobox();
     });
+  });*/
+  // Porfolio isotope and filter
+$(window).on('load', function() {
+  // Inicializar Isotope
+  var portfolioIsotope = $('.portfolio-container').isotope({
+    itemSelector: '.portfolio-item',
+    layoutMode: 'fitRows'
   });
+
+  // Seleccionar el filtro activo inicialmente
+  var $filterActive = $('#portfolio-flters li.filter-active');
+  
+  // Si hay un filtro activo, aplicar su filtro, de lo contrario, mostrar todos los elementos
+  var initialFilter = $filterActive.length ? $filterActive.data('filter') : '*';
+  portfolioIsotope.isotope({ filter: initialFilter });
+
+  // Manejador de clic en los filtros
+  $('#portfolio-flters li').on('click', function() {
+    // Remover la clase 'filter-active' de todos los filtros
+    $('#portfolio-flters li').removeClass('filter-active');
+    // Agregar la clase 'filter-active' al filtro clicado
+    $(this).addClass('filter-active');
+
+    // Aplicar el filtro seleccionado
+    var selectedFilter = $(this).data('filter');
+    portfolioIsotope.isotope({ filter: selectedFilter });
+  });
+});
+
 
   // Testimonials carousel (uses the Owl Carousel library)
   $(".testimonials-carousel").owlCarousel({
